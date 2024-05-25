@@ -1,0 +1,18 @@
+{
+  "name": "content-management-api",
+  "version": "1.0.0",
+  "description": "The Content Management API allows authenticated users to create, read, update, and delete (CRUD) content items. Users authenticate using JWT to securely manage their content.",
+  "main": "index.js",
+  "scripts": {
+    "ts-node": "ts-node",
+    "tsc": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
