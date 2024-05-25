@@ -1,0 +1,20 @@
+@startuml
+
+entity Content
+
+Content : uuid id
+Content : string title
+Content : string description
+Content : string category
+Content : string thumbnail_url
+Content : string content_url
+Content : date created_at
+
+Content : create()
+Content : update()
+Content : delete()
+Content : show()
+Content : list()
+Content : rate()
+
+@enduml
