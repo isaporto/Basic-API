@@ -1,0 +1,10 @@
+@startuml
+
+:User: -> (Create Content)
+:User: -> (Update Content)
+:User: -> (Delete Content)
+:User: -> (Read Content)
+:User: -> (List all Contents)
+:User: -> (Rate a Content)
+
+@enduml
