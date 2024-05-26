@@ -1,7 +1,6 @@
 import { Content, ContentProperties } from "./content";
 import { omit } from "lodash";
 import UniqueEntityId from "../../../shared/domain/value object/unique-entity-id.vo";
-import { validate as uuidValidate } from "uuid";
 
 describe("Content Unit Tests", () => {
   test("Constructor of content", () => {
