@@ -13,11 +13,11 @@ export abstract class Entity<Props> {
     return this.uniqueEntityId.value;
   }
 
-  toJSON() {
+  toJSON(): Required<{ id: string } & Props> {
     return {
       id: this.id,
       ...this.props
-    }
+    } as Required<{ id: string } & Props>
   }
 }
 
