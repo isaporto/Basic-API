@@ -1,3 +1,5 @@
+import { v4 as uuidV4 } from 'uuid';
+
 export type ContentProperties = {
   title: string,
   description: string,
@@ -7,7 +9,8 @@ export type ContentProperties = {
 }
 
 export class Content {
-  constructor(public readonly props: ContentProperties) {
+  constructor(public readonly props: ContentProperties, public readonly id?: string) {
+    this.id = id || uuidV4();
     this.props.created_at = this.props.created_at ?? new Date();
   }
 
