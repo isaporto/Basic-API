@@ -3,15 +3,18 @@ import { omit } from "lodash";
 import UniqueEntityId from "../../../shared/domain/value object/unique-entity-id.vo";
 
 describe("Content Unit Tests", () => {
+
+  const props = {
+    title: "Stardew Valley",
+    description: "Farming game",
+    thumbnail_url: "https://www.pudim.com.br/",
+    content_url: "https://motherfuckingwebsite.com/",
+  }
+
   test("Constructor of content", () => {
-    let content = new Content({
-      title: "Stardew Valley",
-      description: "Farming game",
-      thumbnail_url: "https://www.pudim.com.br/",
-      content_url: "https://motherfuckingwebsite.com/",
-    });
-    const props = omit(content.props, "created_at");
-    expect(props).toStrictEqual({
+    let content = new Content(props);
+    const propsDateOmitted = omit(content.props, "created_at");
+    expect(propsDateOmitted).toStrictEqual({
       title: "Stardew Valley",
       description: "Farming game",
       thumbnail_url: "https://www.pudim.com.br/",
@@ -21,12 +24,6 @@ describe("Content Unit Tests", () => {
   });
 
   test("id field", () => {
-    const props = {
-      title: "going to the store",
-      description: "normal guy normal walk",
-      thumbnail_url: "none",
-      content_url: "https://www.youtube.com/watch?v=iRZ2Sh5-XuM",
-    };
     const contentDatas: { id?: any; props: ContentProperties }[] = [
       { props },
       { props, id: undefined },
@@ -45,27 +42,15 @@ describe("Content Unit Tests", () => {
 
 
   test("getter of each non optional prop", () => {
-    const props = {
-      title: "Don't Starve",
-      description: "some description",
-      thumbnail_url: "https://www.pudim.com.br/",
-      content_url: "https://motherfuckingwebsite.com/",
-    }
     const content = new Content(props);
-    expect(content.title).toBe("Don't Starve");
-    expect(content.description).toBe("some description");
+    expect(content.title).toBe("Stardew Valley");
+    expect(content.description).toBe("Farming game");
     expect(content.thumbnail_url).toBe("https://www.pudim.com.br/");
     expect(content.content_url).toBe("https://motherfuckingwebsite.com/");
   });
 
   test("getter of created_at prop", () => {
     const created_at = new Date("12/12/2012");
-    const props = {
-      title: "Don't Starve",
-      description: "some description",
-      thumbnail_url: "https://www.pudim.com.br/",
-      content_url: "https://motherfuckingwebsite.com/",
-    };
     let content = new Content({
       ...props,
       created_at,
@@ -75,4 +60,20 @@ describe("Content Unit Tests", () => {
     content = new Content(props);
     expect(content.created_at).toBeInstanceOf(Date);
   });
+
+  it('should update a content', () => {
+    const content = new Content(props);
+    const propsDateOmitted = omit(content.props, "created_at");
+    expect(propsDateOmitted).toStrictEqual({
+      title: "Stardew Valley",
+      description: "Farming game",
+      thumbnail_url: "https://www.pudim.com.br/",
+      content_url: "https://motherfuckingwebsite.com/",
+    });
+    content.update("To the Moon", "A game to cry over", "https://pointerpointer.com/", "https://store.steampowered.com/app/206440/To_the_Moon/");
+    expect(content.title).toBe("To the Moon");
+    expect(content.description).toBe("A game to cry over");
+    expect(content.thumbnail_url).toBe("https://pointerpointer.com/");
+    expect(content.content_url).toBe("https://store.steampowered.com/app/206440/To_the_Moon/");
+  })
 });
