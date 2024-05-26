@@ -1,4 +1,4 @@
-import { v4 as uuidV4 } from 'uuid';
+import UniqueEntityId from '../../../shared/domain/unique-entity-id.vo';
 
 export type ContentProperties = {
   title: string,
@@ -9,8 +9,8 @@ export type ContentProperties = {
 }
 
 export class Content {
-  constructor(public readonly props: ContentProperties, public readonly id?: string) {
-    this.id = id || uuidV4();
+  constructor(public readonly props: ContentProperties, public readonly id?: UniqueEntityId) {
+    this.id = id || new UniqueEntityId();
     this.props.created_at = this.props.created_at ?? new Date();
   }
 

@@ -1,8 +1,8 @@
-import InvalidUuidError from "shared/errors/invalid-uuid.error";
+import InvalidUuidError from "../errors/invalid-uuid.error";
 import { v4 as uuidV4, validate as uuidValidate } from "uuid"
 
 export default class UniqueEntityId {
-  constructor(public readonly id: string) {
+  constructor(public readonly id?: string) {
     this.id = id || uuidV4();
     this.validate();
   }

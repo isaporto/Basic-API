@@ -1,5 +1,6 @@
 import { Content, ContentProperties } from "./content";
 import { omit } from "lodash";
+import UniqueEntityId from "../../../shared/domain/unique-entity-id.vo";
 import { validate as uuidValidate } from "uuid";
 
 describe("Content Unit Tests", () => {
@@ -27,18 +28,17 @@ describe("Content Unit Tests", () => {
       thumbnail_url: "none",
       content_url: "https://www.youtube.com/watch?v=iRZ2Sh5-XuM",
     };
-    const contentDatas: { id?: string; props: ContentProperties }[] = [
+    const contentDatas: { id?: any; props: ContentProperties }[] = [
       { props },
       { props, id: undefined },
       { props, id: null },
       { props, id: "" },
-      { props, id: "2a45ef8c-987d-4253-bb62-a324a2137314" },
+      { props, id: new UniqueEntityId() },
     ];
     contentDatas.forEach((contentData) => {
       const content = new Content(contentData.props, contentData.id);
       expect(content.id).not.toBeFalsy();
-      expect(uuidValidate(content.id)).toBeTruthy();
-      if (uuidValidate(contentData.id)) { expect(content.id).toBe(contentData.id) }
+      expect(content.id).toBeInstanceOf(UniqueEntityId);
     });
   });
 
