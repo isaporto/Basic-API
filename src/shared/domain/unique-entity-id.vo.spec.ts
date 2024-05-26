@@ -3,24 +3,23 @@ import InvalidUuidError from "../errors/invalid-uuid.error";
 import UniqueEntityId from "./unique-entity-id.vo";
 
 describe("UniqueEntityId Unit Tests", () => {
+  const idValidateSpy = jest.spyOn(UniqueEntityId.prototype as any, 'validate');
+
   it('should throw error when id is a invalid uuid', () => {
-    const idValidateSpy = jest.spyOn(UniqueEntityId.prototype as any, 'validate')
     expect(() => new UniqueEntityId('fake id')).toThrow(InvalidUuidError);
-    expect(idValidateSpy).toHaveBeenCalled();
+    expect(idValidateSpy).toHaveBeenCalledTimes(1);
   });
 
   it('should accept a uuid passed in constructor', () => {
     const uuid = "e288f473-6d58-4463-82b7-dfebb65ae78e";
     const uniqueEntityId = new UniqueEntityId(uuid);
-    const idValidateSpy = jest.spyOn(UniqueEntityId.prototype as any, 'validate')
     expect(uniqueEntityId.id).toBe(uuid);
-    expect(idValidateSpy).toHaveBeenCalled();
+    expect(idValidateSpy).toHaveBeenCalledTimes(1);
   })
 
   it('should create a uuid when id is empty', () => {
     const uniqueEntityId = new UniqueEntityId();
-    const idValidateSpy = jest.spyOn(UniqueEntityId.prototype as any, 'validate')
     expect(uuidValidate(uniqueEntityId.id)).toBeTruthy();
-    expect(idValidateSpy).toHaveBeenCalled();
+    expect(idValidateSpy).toHaveBeenCalledTimes(1);
   })
 });
