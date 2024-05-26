@@ -11,9 +11,15 @@ describe("Content Unit Tests", () => {
     content_url: "https://motherfuckingwebsite.com/",
   }
 
+  beforeEach(() => {
+    Content.validate = jest.fn();
+  })
+
   test("Constructor of content", () => {
     let content = new Content(props);
     const propsDateOmitted = omit(content.props, "created_at");
+
+    expect(Content.validate).toHaveBeenCalledTimes(1);
     expect(propsDateOmitted).toStrictEqual({
       title: "Stardew Valley",
       description: "Farming game",
@@ -64,13 +70,17 @@ describe("Content Unit Tests", () => {
   it('should update a content', () => {
     const content = new Content(props);
     const propsDateOmitted = omit(content.props, "created_at");
+
     expect(propsDateOmitted).toStrictEqual({
       title: "Stardew Valley",
       description: "Farming game",
       thumbnail_url: "https://www.pudim.com.br/",
       content_url: "https://motherfuckingwebsite.com/",
     });
+
     content.update("To the Moon", "A game to cry over", "https://pointerpointer.com/", "https://store.steampowered.com/app/206440/To_the_Moon/");
+
+    expect(Content.validate).toHaveBeenCalledTimes(2);
     expect(content.title).toBe("To the Moon");
     expect(content.description).toBe("A game to cry over");
     expect(content.thumbnail_url).toBe("https://pointerpointer.com/");

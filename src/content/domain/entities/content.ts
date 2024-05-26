@@ -1,3 +1,4 @@
+import PropertyValidator from "../../../shared/domain/validators/property-validator";
 import Entity from "../../../shared/domain/entity/entity";
 import UniqueEntityId from "../../../shared/domain/value object/unique-entity-id.vo";
 
@@ -11,6 +12,7 @@ export type ContentProperties = {
 
 export class Content extends Entity<ContentProperties> {
   constructor(public readonly props: ContentProperties, id?: UniqueEntityId) {
+    Content.validate(props);
     super(props, id);
     this.props.created_at = this.props.created_at ?? new Date();
   }
@@ -21,10 +23,29 @@ export class Content extends Entity<ContentProperties> {
     thumbnail_url: string,
     content_url: string
   ) {
+    Content.validate({
+      title,
+      description,
+      thumbnail_url,
+      content_url,
+    });
     this.title = title;
     this.description = description;
     this.thumbnail_url = thumbnail_url;
     this.content_url = content_url;
+  }
+
+  static validate(props: Omit<ContentProperties, "created_at">) {
+    PropertyValidator.values(props.title, "title").required().string();
+    PropertyValidator.values(props.description, "description")
+      .required()
+      .string();
+    PropertyValidator.values(props.thumbnail_url, "thumbnail_url")
+      .required()
+      .string();
+    PropertyValidator.values(props.content_url, "content_url")
+      .required()
+      .string();
   }
 
   get title() {
