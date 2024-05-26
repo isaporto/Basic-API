@@ -13,12 +13,14 @@ export default class PropertyValidator {
   required(){
     if (this.value === null || this.value === undefined || this.value === "") {
       throw new ValidationError(`The ${this.property} is required`);
-    }
+    };
+    return this;
   }
 
   string(){
     if (typeof this.value !== 'string') {
       throw new ValidationError(`The ${this.property} must be a string`);
-    }
+    };
+    return this;
   }
 }

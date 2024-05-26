@@ -65,4 +65,17 @@ describe("PropertyValidator Unit Test", () => {
       assertIsValid({ value: validValue, property, rule: "string" });
     });
   });
+
+  it('should throw a validation error when combine two or more rules', () => {
+    let validator = PropertyValidator.values(null, 'field');
+    expect(() => validator.required().string()).toThrow(new ValidationError(`The field is required`));
+
+    validator = PropertyValidator.values(5, 'field');
+    expect(() => validator.required().string()).toThrow(new ValidationError(`The field must be a string`));
+  })
+
+  it('should be valid when combine two or more rules', () => {
+    PropertyValidator.values('test value', 'field').required().string();
+    expect.assertions(0);
+  })
 });
