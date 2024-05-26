@@ -1,3 +1,4 @@
+import Entity from '../../../shared/domain/entity/entity';
 import UniqueEntityId from '../../../shared/domain/value object/unique-entity-id.vo';
 
 export type ContentProperties = {
@@ -8,9 +9,10 @@ export type ContentProperties = {
   created_at?: Date
 }
 
-export class Content {
-  constructor(public readonly props: ContentProperties, public readonly id?: UniqueEntityId) {
-    this.id = id || new UniqueEntityId();
+export class Content extends Entity<ContentProperties> {
+  constructor(
+    public readonly props: ContentProperties, id?: UniqueEntityId) {
+    super(props, id);
     this.props.created_at = this.props.created_at ?? new Date();
   }
 
