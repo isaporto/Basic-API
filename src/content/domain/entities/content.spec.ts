@@ -37,7 +37,9 @@ describe("Content Unit Tests", () => {
     contentDatas.forEach((contentData) => {
       const content = new Content(contentData.props, contentData.id);
       expect(content.id).not.toBeFalsy();
-      expect(content.id).toBeInstanceOf(UniqueEntityId);
+      expect(content.uniqueEntityId).not.toBeFalsy();
+      expect(typeof content.id).toBe('string');
+      expect(content.uniqueEntityId).toBeInstanceOf(UniqueEntityId);
     });
   });
 
