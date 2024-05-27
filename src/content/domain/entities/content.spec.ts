@@ -7,6 +7,7 @@ describe("Content Unit Tests", () => {
   const props = {
     title: "Stardew Valley",
     description: "Farming game",
+    category: 'game',
     thumbnail_url: "https://www.pudim.com.br/",
     content_url: "https://motherfuckingwebsite.com/",
   }
@@ -23,6 +24,7 @@ describe("Content Unit Tests", () => {
     expect(propsDateOmitted).toStrictEqual({
       title: "Stardew Valley",
       description: "Farming game",
+      category: 'game',
       thumbnail_url: "https://www.pudim.com.br/",
       content_url: "https://motherfuckingwebsite.com/",
     });
@@ -51,6 +53,7 @@ describe("Content Unit Tests", () => {
     const content = new Content(props);
     expect(content.title).toBe("Stardew Valley");
     expect(content.description).toBe("Farming game");
+    expect(content.category).toBe("game");
     expect(content.thumbnail_url).toBe("https://www.pudim.com.br/");
     expect(content.content_url).toBe("https://motherfuckingwebsite.com/");
   });
@@ -74,16 +77,18 @@ describe("Content Unit Tests", () => {
     expect(propsDateOmitted).toStrictEqual({
       title: "Stardew Valley",
       description: "Farming game",
+      category: 'game',
       thumbnail_url: "https://www.pudim.com.br/",
       content_url: "https://motherfuckingwebsite.com/",
     });
 
-    content.update("To the Moon", "A game to cry over", "https://pointerpointer.com/", "https://store.steampowered.com/app/206440/To_the_Moon/");
+    content.update("Everything's Alright", "A music to cry over", 'music', "https://pointerpointer.com/", "https://www.youtube.com/watch?v=nIZxh_nc64w");
 
     expect(Content.validate).toHaveBeenCalledTimes(2);
-    expect(content.title).toBe("To the Moon");
-    expect(content.description).toBe("A game to cry over");
+    expect(content.title).toBe("Everything's Alright");
+    expect(content.description).toBe("A music to cry over");
+    expect(content.category).toBe("music");
     expect(content.thumbnail_url).toBe("https://pointerpointer.com/");
-    expect(content.content_url).toBe("https://store.steampowered.com/app/206440/To_the_Moon/");
+    expect(content.content_url).toBe("https://www.youtube.com/watch?v=nIZxh_nc64w");
   })
 });

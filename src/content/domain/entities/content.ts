@@ -5,6 +5,7 @@ import UniqueEntityId from "../../../shared/domain/value object/unique-entity-id
 export type ContentProperties = {
   title: string;
   description: string;
+  category: string;
   thumbnail_url: string;
   content_url: string;
   created_at?: Date;
@@ -20,17 +21,20 @@ export class Content extends Entity<ContentProperties> {
   update(
     title: string,
     description: string,
+    category: string,
     thumbnail_url: string,
     content_url: string
   ) {
     Content.validate({
       title,
       description,
+      category,
       thumbnail_url,
       content_url,
     });
     this.title = title;
     this.description = description;
+    this.category = category;
     this.thumbnail_url = thumbnail_url;
     this.content_url = content_url;
   }
@@ -40,6 +44,7 @@ export class Content extends Entity<ContentProperties> {
     PropertyValidator.values(props.description, "description")
       .required()
       .string();
+    PropertyValidator.values(props.category, "category").required().string();
     PropertyValidator.values(props.thumbnail_url, "thumbnail_url")
       .required()
       .string();
@@ -60,6 +65,13 @@ export class Content extends Entity<ContentProperties> {
   }
   private set description(value: string) {
     this.props.description = value;
+  }
+
+  get category() {
+    return this.props.category;
+  }
+  private set category(value: string) {
+    this.props.category = value;
   }
 
   get thumbnail_url() {

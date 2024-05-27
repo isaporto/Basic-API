@@ -5,7 +5,7 @@ entity Content
 Content : uuid id
 Content : string title
 Content : string description
-Content : reference category
+Content : string category
 Content : string thumbnail_url
 Content : string content_url
 Content : date created_at
