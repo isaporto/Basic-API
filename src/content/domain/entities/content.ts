@@ -18,7 +18,7 @@ export class Content extends Entity<ContentProperties> {
     this.props.created_at = this.props.created_at ?? new Date();
   }
 
-  static categories = ["game", "video", "artwork", "music"]
+  static readonly categories = ["game", "video", "artwork", "music"];
 
   update(
     title: string,
