@@ -23,4 +23,11 @@ export default class PropertyValidator {
     };
     return this;
   }
+
+  inclusion(options: any[]) {
+    if (!options.includes(this.value)) {
+      throw new ValidationError(`This value is not valid ${this.property}`);
+    }
+    return this;
+  }
 }

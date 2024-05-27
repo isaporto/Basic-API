@@ -6,18 +6,26 @@ type ExpectedRules = {
   property: string;
   rule: keyof PropertyValidator;
   error?: ValidationError;
+  params?: any[];
 };
 
-function assertIsInvalid({ value, property, rule, error }: ExpectedRules) {
-  expect(() => {
-    return PropertyValidator.values(value, property)[rule]();
-  }).toThrow(error);
+function assertIsInvalid(expected: ExpectedRules) {
+  expect(() => runRule(expected)).toThrow(expected.error);
 }
 
-function assertIsValid({ value, property, rule }: ExpectedRules) {
-  expect(() => {
-    return PropertyValidator.values(value, property)[rule]();
-  }).not.toThrow(ValidationError);
+function assertIsValid(expected: ExpectedRules) {
+  expect(() => runRule(expected)).not.toThrow(ValidationError);
+}
+
+function runRule({
+  value,
+  property,
+  rule,
+  params = [],
+}: Omit<ExpectedRules, "error">) {
+  const validator = PropertyValidator.values(value, property);
+  const method = validator[rule] as (...args: any[]) => PropertyValidator;
+  method.apply(validator, params);
 }
 
 describe("PropertyValidator Unit Test", () => {
@@ -63,6 +71,27 @@ describe("PropertyValidator Unit Test", () => {
     const validValuesArrange = ["test value", ""];
     validValuesArrange.forEach((validValue) => {
       assertIsValid({ value: validValue, property, rule: "string" });
+    });
+  });
+
+  test("inclusion validation", () => {
+    const property = "evan";
+    const errorMessage = `This value is not valid ${property}`;
+    const validParams = [1, 2, 3, 4]
+    const invalidValuesArrange = ["", undefined, 5, true, {}, []];
+    invalidValuesArrange.forEach((invalidValue) => {
+      assertIsInvalid({
+        value: invalidValue,
+        property,
+        rule: "inclusion",
+        error: new ValidationError(errorMessage),
+        params: [validParams]
+      });
+    });
+
+    const validValuesArrange = [2, 4, 3, 1];
+    validValuesArrange.forEach((validValue) => {
+      assertIsValid({ value: validValue, property, rule: "inclusion", params: [validParams] });
     });
   });
 
