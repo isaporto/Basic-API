@@ -101,10 +101,14 @@ describe("PropertyValidator Unit Test", () => {
 
     validator = PropertyValidator.values(5, 'field');
     expect(() => validator.required().string()).toThrow(new ValidationError(`The field must be a string`));
+
+    validator = PropertyValidator.values("banana", 'field');
+    expect(() => validator.required().string().inclusion(["apple", "pear"])).toThrow(new ValidationError(`This value is not valid field`));
   })
 
   it('should be valid when combine two or more rules', () => {
     PropertyValidator.values('test value', 'field').required().string();
+    PropertyValidator.values('banana', 'field').required().string().inclusion(["banana", "apple"]);
     expect.assertions(0);
   })
 });
