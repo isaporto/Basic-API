@@ -18,6 +18,8 @@ export class Content extends Entity<ContentProperties> {
     this.props.created_at = this.props.created_at ?? new Date();
   }
 
+  static categories = ["game", "video", "artwork", "music"]
+
   update(
     title: string,
     description: string,
@@ -44,7 +46,7 @@ export class Content extends Entity<ContentProperties> {
     PropertyValidator.values(props.description, "description")
       .required()
       .string();
-    PropertyValidator.values(props.category, "category").required().string();
+    PropertyValidator.values(props.category, "category").required().string().inclusion(Content.categories);
     PropertyValidator.values(props.thumbnail_url, "thumbnail_url")
       .required()
       .string();
