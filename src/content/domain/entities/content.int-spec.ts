@@ -244,6 +244,11 @@ describe("Content Integration Tests", () => {
       invalidStringValues.forEach((invalidValue) => {
         assertCategoryIsInvalid(props, invalidValue, "The category must be a string");
       });
+
+      const invalidInclusions = ["banana", "games"];
+      invalidInclusions.forEach((invalidInclusion) => {
+        assertCategoryIsInvalid(props, invalidInclusion, "This value is not valid category");
+      });
     });
 
     it("should be invalid Content using thumbnail_url property", () => {
